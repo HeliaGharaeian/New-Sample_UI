@@ -1,29 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { WebApiService } from './web-api.service';
+import { HttpClient } from '@angular/common/http';
+import { User } from 'src/app/models/UserModel';
+import { enviroment } from 'src/enviroments/enviroment'
 
-var apiUrl = "http://localhost:8100/";
 
-var httpLink = {
-  GetUsers: apiUrl + "/api/user/GetUsers",
-  DeleteUser: apiUrl + "/api/user/DeleteUser",
-  GetUserById: apiUrl + "/api/user/GetUserById",
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpProviderService {
+  constructor(private http: HttpClient) { }
 
-  constructor(private webApiService: WebApiService) { }
+  public GetUsers() : Observable<User[]>{
+    return this.http.get<User[]>(
+      `${enviroment.apiurl}/${"Home/GetUsers"}`);
+  }
+  public GetUsersById(userId:number) : Observable<User>{
+    return this.http.get<User>(
+      `${enviroment.apiurl}/${"Home/GetUserById/"+userId}`);
+  }
+  public AddUser(model :User) : Observable<any>{
+    return this.http.post<any>(
+      `${enviroment.apiurl}/${"Home/AddUser"}`, model);
+  } 
+  public UpdateUser(user :User) : Observable<User[]>{
+    return this.http.put<User[]>(
+      `${enviroment.apiurl}/${"Home/UpdateUser"}`, user);
+  }
 
-  public GetUsers(): Observable<any> {
-    return this.webApiService.get(httpLink.GetUsers);
+  public DeleteUser(model:User) : Observable<any>{
+    return this.http.post<any>(
+      `${enviroment.apiurl}/${"Home/DeleteUser"}`,model);
   }
-  public DeleteUser(model: any): Observable<any> {
-    return this.webApiService.post(httpLink.DeleteUser + '?UserId=' + model, "");
-  }
-  public GetUserById(model: any): Observable<any> {
-    return this.webApiService.get(httpLink.GetUserById + '?UserId=' + model);
-  }
- }
+}                          

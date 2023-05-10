@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpProviderService } from '../Service/http-provider.service';
+import { User } from '../models/UserModel';
 
 @Component({
   selector: 'ng-modal-confirm',
@@ -47,10 +48,11 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.GetUsers();
   }
-  async GetUsers() {
+   GetUsers() {
     this.httpProvider.GetUsers().subscribe((data : any) => {
-      if (data != null && data.body != null) {
-        var resultData = data.body;
+      debugger;
+      if (data != null && data) {
+        var resultData = data;
         if (resultData) {
           this.userList = resultData;
         }
@@ -71,7 +73,7 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['AddUser']);
   }
 
-  deleteUserConfirmation(user: any) {
+  deleteUserConfirmation(user: User) {
     this.modalService.open(MODALS['deleteModal'],
       {
         ariaLabelledBy: 'modal-basic-title'

@@ -8,9 +8,11 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class WebApiService {
-
   constructor(private httpClient: HttpClient) { }
-  get(url: string): Observable<any> {
+
+  // Get call method
+  // Param 1 : url
+  get(apiurl: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -20,7 +22,7 @@ export class WebApiService {
       observe: "response" as 'body'
     };
     return this.httpClient.get(
-      url,
+      apiurl,
       httpOptions
     )
       .pipe(
@@ -28,7 +30,11 @@ export class WebApiService {
         catchError(this.handleError)
       );
   }
-  post(url: string, model: any): Observable<any> {
+
+  // Post call method 
+  // Param 1 : url
+  // Param 2 : model
+  post(apiurl: string, model: any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -36,7 +42,7 @@ export class WebApiService {
      observe: "response" as 'body'
     };
     return this.httpClient.post(
-      url,
+      apiurl,
       model,
       httpOptions)
       .pipe(

@@ -10,8 +10,9 @@ const routes: Routes = [
   //{ path: '', redirectTo: 'Home', pathMatch: 'full',children:[]},
   { path: '', component: HomeComponent },
   { path: 'AddUser', component: AddUserComponent },
-  { path: 'ViewUser/:Id', component: ViewUserComponent },
+  { path: 'GetUsersById/:Id', component: ViewUserComponent },
   { path: 'EditUser/:Id', component: EditUserComponent } ,
+  { path: 'ViewUser/:Id', component: ViewUserComponent } ,
   { path: '**', component: HomeComponent },
 ];
 
